@@ -20,6 +20,9 @@ except ImportError:
 import clap
 
 
+__version__ = '0.0.1'
+
+
 filename_ui_choices = (
     os.path.abspath('./ui.json'),
     os.path.expanduser('~/.local/share/pocket/ui.json'),
@@ -80,7 +83,7 @@ finally:
 
 
 if '--version' in ui:
-    print('issue version {0}'.format(issue.__version__))
+    print('pocket command line client {0}'.format(__version__))
     exit(0)
 if clap.helper.HelpRunner(ui=ui, program=sys.argv[0]).adjust(options=['-h', '--help']).run().displayed(): exit(0)
 
