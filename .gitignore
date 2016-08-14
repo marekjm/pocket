@@ -1,0 +1,6 @@
+*.py[co]
+*~
+
+.*
+!.gitignore
+!.gitkeep

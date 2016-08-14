@@ -1,0 +1,41 @@
+{
+    "doc": {
+        "help": "pocket command line client",
+        "usage": [
+            "--help",
+            "--version",
+            "add [--scrape|-s] <url>"
+        ]
+    },
+    "options": {
+        "global": [
+            {
+                "short": "v",
+                "long": "verbose",
+                "help": "display verbose output"
+            }
+        ],
+        "local": [
+            {
+                "long": "version",
+                "help": "show version"
+            }
+        ]
+    },
+    "commands": {
+        "add": {
+            "doc": {
+                "help": "add new URL to pocket",
+                "usage": [
+                    "add http://example.com/some-article.html"
+                ]
+            },
+            "operands": {
+                "no": [1, 2]
+            }
+        }
+    },
+    "operands": {
+        "no": [0, 0]
+    }
+}
