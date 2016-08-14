@@ -192,6 +192,43 @@ def commandAdd(ui):
         exit(1)
 
 
+def commandGet(ui):
+    r = connection.post('/v3/get', {})
+    if not r.ok:
+        print('error: {}: {}'.format(r.headers.get('X-Error-Code', 0), r.headers.get('X-Error', '')))
+        exit(1)
+    payload = {}
+    if '--count' in ui:
+        payload['count'] = ui.get('--count')
+    print(payload)
+    response = r.json().get('list', payload)
+
+    if '--grep' in ui:
+        # if grep-friendly output has been requested, dump it and
+        # exit early
+        for _, item in response.items():
+            print('{} {}'.format(item.get('resolved_url'), item.get('resolved_title')))
+        exit(0)
+
+    # display less-friendly output otherwise
+    limit = len(response)-1
+    for i, _ in enumerate(response.items()):
+        _, item = _
+        url_header = 'url {}'.format(item.get('resolved_url', ''))
+        if colored:
+            url_header = (colored.fg('yellow') + url_header + colored.attr('reset'))
+        print(url_header)
+        print('Title: {}'.format(item.get('resolved_title', '')))
+
+        display_excerpt = ('--excerpt' in ui and item.get('excerpt'))
+        if i < limit or display_excerpt: print()
+        if display_excerpt:
+            # split after the full stop after sentences
+            excerpt_lines = item.get('excerpt', '').split('. ')
+            print('.\n'.join(map(lambda s: '    {}'.format(s), map(lambda s: s.strip(), excerpt_lines))))
+            if i < limit: print()
+
+
 def dispatch(ui, *commands, overrides = {}, default_command=''):
     """Semi-automatic command dispatcher.
 
@@ -218,4 +255,5 @@ def dispatch(ui, *commands, overrides = {}, default_command=''):
 
 dispatch(ui,
     commandAdd,
+    commandGet,
 )

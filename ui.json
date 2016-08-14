@@ -33,6 +33,38 @@
             "operands": {
                 "no": [1, 2]
             }
+        },
+        "get": {
+            "doc": {
+                "help": "retrieve items stored by Pocket"
+            },
+            "options": {
+                "local": [
+                    {
+                        "short": "c",
+                        "long": "count",
+                        "help": "only return <count> number of items",
+                        "arguments": ["int"]
+                    },
+                    {
+                        "short": "o",
+                        "long": "offset",
+                        "help": "used only with --count; start returning from offset position of results",
+                        "arguments": ["int"],
+                        "requires": ["--count"]
+                    },
+                    {
+                        "long": "grep",
+                        "help": "list fetched articles in grep-friendly way; URL first, then title, on single line"
+                    },
+                    {
+                        "short": "e",
+                        "long": "excerpt",
+                        "help": "display article excerpt if available",
+                        "conflicts": ["--grep"]
+                    }
+                ]
+            }
         }
     },
     "operands": {
