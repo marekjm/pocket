@@ -2,13 +2,11 @@
 
 set -e
 
-BIN_PATH=''
+BIN_PATH=$1
 SHARE_PATH='~/.local/share/pocket'
 CONFIG_PATH='~/.config/pocket'
 
-if [[ $PATH == '' ]]; then
-    BIN_PATH='~/.local/bin'
-else
+if [[ $BIN_PATH == '' ]]; then
     BIN_PATH=$(echo "$PATH" | cut -d':' -f1)
 fi
 
@@ -19,9 +17,8 @@ read OK
 if [[ $OK != 'yes' ]]; then
     echo -n "type alternative installation path: "
     read BIN_PATH
+    echo "installing to: $BIN_PATH/pocket"
 fi
-
-echo "installing to: $BIN_PATH/pocket"
 
 # Install executable
 mkdir -p $BIN_PATH
