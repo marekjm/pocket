@@ -196,14 +196,14 @@ def commandAdd(ui):
 
 
 def commandGet(ui):
-    r = connection.post('/v3/get', {})
-    if not r.ok:
-        print('error: {}: {}'.format(r.headers.get('X-Error-Code', 0), r.headers.get('X-Error', '')))
-        exit(1)
     payload = {}
     if '--count' in ui:
         payload['count'] = ui.get('--count')
-    response = r.json().get('list', payload)
+    r = connection.post('/v3/get', payload)
+    if not r.ok:
+        print('error: {}: {}'.format(r.headers.get('X-Error-Code', 0), r.headers.get('X-Error', '')))
+        exit(1)
+    response = r.json().get('list', [])
 
     if '--grep' in ui:
         # if grep-friendly output has been requested, dump it and
