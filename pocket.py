@@ -203,7 +203,6 @@ def commandGet(ui):
     payload = {}
     if '--count' in ui:
         payload['count'] = ui.get('--count')
-    print(payload)
     response = r.json().get('list', payload)
 
     if '--grep' in ui:
